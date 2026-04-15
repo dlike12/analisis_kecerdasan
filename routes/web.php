@@ -39,7 +39,6 @@ Route::prefix('siswa')->middleware('auth')->group(function () {
     Route::get('/tes', [TesController::class, 'index'])->name('siswa.tes');
     Route::post('/tes/submit', [TesController::class, 'submit'])->name('siswa.submit-tes');
     Route::get('/hasil', [TesController::class, 'hasil'])->name('siswa.hasil');
-    Route::get('/export-pdf/{id}', [TesController::class, 'exportPDF'])->name('export.pdf');
 });
 
 // Route Export PDF Massal
