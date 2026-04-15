@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Laporan Lengkap Seluruh Kelas</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.4;
+            margin: 2cm 2.5cm;
+            background: white;
+            font-size: 10pt;
+        }
+        .header {
+            position: relative;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #2ecc71;
+            padding-bottom: 12px;
+            min-height: 70px;
+        }
+        .logo {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 70px;
+            height: auto;
+        }
+        .title-section {
+            text-align: center;
+            margin-left: 80px;
+        }
+        .title-section h1 {
+            color: #2ecc71;
+            font-size: 14pt;
+            margin: 0;
+            font-weight: bold;
+        }
+        .title-section p {
+            color: #666;
+            font-size: 9pt;
+            margin-top: 4px;
+        }
+        /* Ringkasan total */
+        .summary {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 12px 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .summary-item {
+            margin: 4px 0;
+            font-size: 10pt;
+        }
+        .summary-item strong {
+            color: #2ecc71;
+        }
+        .summary-item span {
+            margin: 0 8px;
+        }
+        .kelas-section {
+            margin: 25px 0;
+            page-break-inside: avoid;
+        }
+        .kelas-title {
+            background: #2ecc71;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 11pt;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background: #eef2ff;
+            color: #1e293b;
+            padding: 6px 8px;
+            text-align: left;
+            font-size: 9pt;
+            font-weight: bold;
+            border-bottom: 1px solid #cbd5e1;
+        }
+        td {
+            padding: 5px 8px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 9pt;
+        }
+        .cluster-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 8pt;
+            font-weight: bold;
+        }
+        .cluster-1 { background: #fef3c7; color: #92400e; }
+        .cluster-2 { background: #dbeafe; color: #1e40af; }
+        .cluster-3 { background: #d1fae5; color: #065f46; }
+        .belum-tes { background: #f1f5f9; color: #475569; }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 8px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 7pt;
+            color: #94a3b8;
+        }
+        @page { margin: 2cm 2.5cm; size: A4 portrait; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="{{ public_path('images/logo_sekolah.png') }}" class="logo" alt="Logo">
+        <div class="title-section">
+            <h1>LAPORAN LENGKAP HASIL ANALISIS KECERDASAN JAMAK</h1>
+            <p>Multiple Intelligences Test Report - Seluruh Kelas</p>
+            <p>Tanggal Cetak: {{ date('d F Y H:i:s') }}</p>
+        </div>
+    </div>
+
+    <div class="summary">
+        <div class="summary-item">
+            <strong>RINGKASAN TOTAL</strong>
+        </div>
+        <div class="summary-item">
+            <strong>Total Siswa:</strong> {{ $statistikTotal['total_siswa'] }} &nbsp;|&nbsp;
+            <strong>Sudah Tes:</strong> {{ $statistikTotal['total_sudah_tes'] }} &nbsp;|&nbsp;
+            <strong>Belum Tes:</strong> {{ $statistikTotal['total_belum_tes'] }}
+        </div>
+        <div class="summary-item">
+            <strong>Cluster 1 (Perlu Pendampingan):</strong> {{ $statistikTotal['total_cluster1'] }} &nbsp;
+            <strong>Cluster 2 (Berkembang):</strong> {{ $statistikTotal['total_cluster2'] }} &nbsp;
+            <strong>Cluster 3 (Optimal):</strong> {{ $statistikTotal['total_cluster3'] }}
+        </div>
+    </div>
+
+    @foreach($dataPerKelas as $kelasData)
+    <div class="kelas-section">
+        <div class="kelas-title">KELAS {{ $kelasData['kelas'] }}</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>NIK</th>
+                    <th>Nama</th>
+                    <th>JK</th>
+                    <th>Tipe Kecerdasan</th>
+                    <th>Cluster</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($kelasData['siswa'] as $index => $s)
+                <tr>
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ $s['nik'] }}</td>
+                    <td>{{ $s['nama'] }}</td>
+                    <td>{{ $s['jk'] }}</td>
+                    <td>{{ ucfirst(str_replace('_', ' ', $s['tipe_kecerdasan'])) }}</td>
+                    <td>
+                        @if($s['tipe_kecerdasan'] == 'Belum Tes')
+                            <span class="cluster-badge belum-tes">Belum Tes</span>
+                        @else
+                            <span class="cluster-badge cluster-{{ $s['cluster'] }}">
+                                @if($s['cluster'] == 1) Cluster 1 - Perlu Pendampingan
+                                @elseif($s['cluster'] == 2) Cluster 2 - Berkembang
+                                @else Cluster 3 - Optimal @endif
+                            </span>
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    @endforeach
+
+    <div class="footer">
+        Laporan dihasilkan oleh Sistem Analisis Kecerdasan Jamak<br>
+        Menggunakan Algoritma K-Means Clustering | © 2026
+    </div>
+</body>
+</html>
