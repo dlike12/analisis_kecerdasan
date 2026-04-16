@@ -187,7 +187,7 @@
                     </svg>
                     Lihat Detail Grafik
                 </a>
-                <a href="{{ route('export.pdf', $hasil->id) }}" 
+                <a href="{{ route('export.single', $hasil->id) }}" 
                    class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:opacity-90 transition-all duration-300 transform hover:scale-105 shadow-md">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M4 4h16v16H4z"></path>

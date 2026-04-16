@@ -59,5 +59,5 @@ Route::middleware('auth')->group(function () {
 
 // Route Export PDF (gunakan export.single)
 Route::middleware('auth')->group(function () {
-    Route::get('/export-pdf/{id}', [App\Http\Controllers\ExportController::class, 'exportSingle'])->name('export.pdf');
+    Route::get('/export-pdf/{id}', [App\Http\Controllers\ExportController::class, 'exportSingle'])->name('export.single');
 });

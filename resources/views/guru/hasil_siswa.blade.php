@@ -59,7 +59,7 @@
         
         <!-- Tombol -->
         <div class="flex justify-center space-x-4">
-            <a href="{{ route('export.pdf', $hasil->id) }}" 
+            <a href="{{ route('export.single', $hasil->id) }}" 
                 class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition transform hover:scale-105 shadow-md">
                 📄 Export PDF
             </a>
