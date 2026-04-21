@@ -49,7 +49,7 @@
             <h3 class="text-white font-semibold text-lg">📋 Daftar Siswa</h3>
         </div>
         <div class="overflow-x-auto">
-            <table class="w-full">
+            <div class="table-responsive"><table class="w-full">
                 <thead class="bg-gray-50">
                     <tr><th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase">No</th><th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase">NIK</th><th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase">Nama</th><th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase">Kelas</th><th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase">JK</th><th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase">Umur</th><th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase">Status Tes</th><th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th></tr>
                 </thead>
@@ -69,7 +69,7 @@
                     <tr><td colspan="8" class="px-6 py-12 text-center text-gray-500">Belum ada data siswa. Silakan tambah siswa baru.</td></tr>
                     @endforelse
                 </tbody>
-            </table>
+            </table></div>
         </div>
     </div>
 </div>

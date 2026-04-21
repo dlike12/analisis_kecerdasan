@@ -6,6 +6,7 @@ use App\Models\Siswa;
 use App\Models\HasilAnalisis;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ExportController extends Controller
 {
@@ -64,7 +65,7 @@ class ExportController extends Controller
             $imageData = base64_encode($response->getBody());
             return 'data:image/png;base64,' . $imageData;
         } catch (\Exception $e) {
-            \Log::error('QuickChart error: ' . $e->getMessage());
+            Log::error('QuickChart error: ' . $e->getMessage());
             return $this->generateFallbackChartHTML($skor, $labels);
         }
     }

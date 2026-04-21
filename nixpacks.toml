@@ -1,0 +1,8 @@
+[phpmExtensions]
+extensions = [ "pdo_mysql", "mysqli", "mbstring", "exif", "gd", "zip", "curl", "bcmath", "ctype", "fileinfo", "json", "tokenizer", "xml" ]
+
+[phpm]
+version = "8.2"
+
+[phpm.startCmd]
+cmd = "php artisan serve --host=0.0.0.0 --port=${PORT}"
