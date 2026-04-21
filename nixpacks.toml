@@ -5,4 +5,4 @@ extensions = [ "pdo_mysql", "mysqli", "mbstring", "exif", "gd", "zip", "curl", "
 version = "8.2"
 
 [phpm.startCmd]
-cmd = "php artisan serve --host=0.0.0.0 --port=${PORT}"
+cmd = "php artisan optimize && php artisan serve --host=0.0.0.0 --port=${PORT}"
