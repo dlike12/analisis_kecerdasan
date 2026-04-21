@@ -6,13 +6,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TesController;
+use App\Http\Controllers\ExportController;
 
-// Halaman login
 Route::get('/', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Route Admin
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/kelola-guru', [AdminController::class, 'kelolaGuru'])->name('admin.kelola-guru');
@@ -22,7 +21,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/laporan', [AdminController::class, 'laporanKeseluruhan'])->name('admin.laporan');
 });
 
-// Route Guru
 Route::prefix('guru')->middleware('auth')->group(function () {
     Route::get('/dashboard', [GuruController::class, 'dashboard'])->name('guru.dashboard');
     Route::get('/kelola-siswa', [GuruController::class, 'kelolaSiswa'])->name('guru.kelola-siswa');
@@ -33,7 +31,6 @@ Route::prefix('guru')->middleware('auth')->group(function () {
     Route::get('/laporan-siswa', [GuruController::class, 'laporanSiswa'])->name('guru.laporan-siswa');
 });
 
-// Route Siswa
 Route::prefix('siswa')->middleware('auth')->group(function () {
     Route::get('/dashboard', [SiswaController::class, 'dashboard'])->name('siswa.dashboard');
     Route::get('/tes', [TesController::class, 'index'])->name('siswa.tes');
@@ -41,23 +38,14 @@ Route::prefix('siswa')->middleware('auth')->group(function () {
     Route::get('/hasil', [TesController::class, 'hasil'])->name('siswa.hasil');
 });
 
-// Route Export PDF Massal
 Route::middleware('auth')->group(function () {
-    Route::get('/export/semua-siswa', [App\Http\Controllers\ExportController::class, 'exportAllSiswa'])->name('export.semua-siswa');
-    Route::get('/export/per-kelas', [App\Http\Controllers\ExportController::class, 'exportPerKelas'])->name('export.per-kelas');
+    // Hanya SATU route export PDF dengan nama 'export.single'
+    Route::get('/export-pdf/{id}', [ExportController::class, 'exportSingle'])->name('export.single');
+    Route::get('/export/semua-siswa', [ExportController::class, 'exportAllSiswa'])->name('export.semua-siswa');
+    Route::get('/export/per-kelas', [ExportController::class, 'exportPerKelas'])->name('export.per-kelas');
+    Route::get('/export/laporan-lengkap', [ExportController::class, 'exportLaporanLengkap'])->name('export.laporan-lengkap');
 });
 
-// Route Export PDF Laporan Lengkap (Guru)
-Route::middleware('auth')->group(function () {
-    Route::get('/export/laporan-lengkap', [App\Http\Controllers\ExportController::class, 'exportLaporanLengkap'])->name('export.laporan-lengkap');
-});
-
-// Route Export PDF Single Siswa (hanya satu route dengan nama export.single)
-Route::middleware('auth')->group(function () {
-    Route::get('/export-pdf/{id}', [App\Http\Controllers\ExportController::class, 'exportSingle'])->name('export.single');
-});
-
-// Redirect /login ke halaman utama
 Route::get('/login', function () {
     return redirect('/');
 });
