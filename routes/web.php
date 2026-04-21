@@ -52,12 +52,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/export/laporan-lengkap', [App\Http\Controllers\ExportController::class, 'exportLaporanLengkap'])->name('export.laporan-lengkap');
 });
 
-// Route Export PDF Single Siswa
-Route::middleware('auth')->group(function () {
-    Route::get('/export/single/{id}', [App\Http\Controllers\ExportController::class, 'exportSingle'])->name('export.single');
-});
-
-// Route Export PDF (gunakan export.single)
+// Route Export PDF Single Siswa (hanya satu route dengan nama export.single)
 Route::middleware('auth')->group(function () {
     Route::get('/export-pdf/{id}', [App\Http\Controllers\ExportController::class, 'exportSingle'])->name('export.single');
+});
+
+// Redirect /login ke halaman utama
+Route::get('/login', function () {
+    return redirect('/');
 });
